@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Special Elite', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .letter-container {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #e91e63;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #e91e63;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn:hover {
+            background-color: #d81b60;
+        }
+    </style>
+</head>
+<body>
+    <audio id="birthdaySong" src="music.mp3"></audio>
+    <button onclick="playSong()">Play Birthday Song</button>
+    <div class="letter-container" id="letter">
+        <h1>Happy Birthday!</h1>
+        <p>
+            Dear Harshitha, <br><br>
+Happy 20th Birthday! 
+As I sit here thinking about what to say, I feel overwhelmed by the countless memories we’ve created and the journey we’ve been on together. Over these past two years, life hasn’t been easy for either of us. From family struggles to streaks of bad luck that seemed never-ending, we’ve faced battles that could’ve easily left us shattered. But instead of breaking us, those tough moments have strengthened our bond. Through it all, you’ve been my constant—my confidant, my cheerleader, and my greatest support.<br>
+I don’t think I’ll ever fully be able to express how grateful I am for you. You’ve stood by me during my darkest days, like when my granny was hospitalized. You never pushed or rushed me. Instead, you gave me the time and space to deal with everything at my own pace, offering your quiet strength just when I needed it most. That’s who you are—someone who shows up for the people she cares about in ways that words can’t adequately capture.<br>
+What truly amazes me, though, is how much you’ve given of yourself to everyone around you. You always go out of your way to help others, even when it’s inconvenient or downright unfair to you. You’ve shown incredible empathy, understanding the perspectives of others—even those who’ve wronged you in ways that most people couldn’t forgive. While it’s one of your most beautiful qualities, it’s also something that worries me.<br>
+You deserve to put yourself first sometimes. You deserve to be selfish—not in a way that takes away from your amazing heart, but in a way that protects it. You’ve spent so much of your life giving to others and making sacrifices; now, as you step into your 20s, I hope you learn to give yourself the same love, care, and understanding you so freely offer the world.<br>
+I’m constantly inspired by the little things you do for me and for everyone around you. Whether it’s you trying to enjoy football because you know I love it, listening to my music and watching my videos, or simply showing up to cheer me on when I need it, your thoughtfulness never goes unnoticed. You have this incredible way of making people feel valued and important. It’s something I admire deeply and something I hope you know is rare and so special.<br>
+Not a single one of your 20 years has been wasted. You’ve touched so many lives, and I know you’ll continue to do so in ways you probably can’t even imagine. One day, when you achieve your dream of becoming a doctor, you’re going to change the lives of countless people. But honestly, you’re already doing that—making a difference, one person at a time, with your kindness, your strength, and your unwavering compassion.<br>
+As you step into this new chapter of your life, I want you to know how proud I am of you. I want you to see yourself the way I see you: as someone who is extraordinary in every sense of the word. You’ve achieved so much already, but I know this is just the beginning. You have the strength, determination, and heart to achieve every dream you’ve ever had, whether big or small.<br>
+So today, on your birthday, take a moment to celebrate not just the amazing person you are but the incredible person you’re becoming. Remember to take care of yourself, to chase your happiness unapologetically, and to recognize how deeply you are loved and cherished by everyone lucky enough to know you.<br>
+Here’s to you, to everything you’ve already done, and to the incredible future that lies ahead. The world is a better place with you in it, and I am endlessly grateful to have you in my life.<br>
+Happy Birthday, Harshitha! <br><br>
+With all my love and admiration, <br>
+Asmit.
+
+        </p>
+        <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+        playSong();
+        };
+
+        async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Define the content
+    const content = `Dear Harshitha,
+Happy 20th Birthday! 
+As I sit here thinking about what to say, I feel overwhelmed by the countless memories we’ve created and the journey we’ve been on together. Over these past two years, life hasn’t been easy for either of us. From family struggles to streaks of bad luck that seemed never-ending, we’ve faced battles that could’ve easily left us shattered. But instead of breaking us, those tough moments have strengthened our bond. Through it all, you’ve been my constant—my confidant, my cheerleader, and my greatest support.
+I don’t think I’ll ever fully be able to express how grateful I am for you. You’ve stood by me during my darkest days, like when my granny was hospitalized. You never pushed or rushed me. Instead, you gave me the time and space to deal with everything at my own pace, offering your quiet strength just when I needed it most. That’s who you are—someone who shows up for the people she cares about in ways that words can’t adequately capture.
+What truly amazes me, though, is how much you’ve given of yourself to everyone around you. You always go out of your way to help others, even when it’s inconvenient or downright unfair to you. You’ve shown incredible empathy, understanding the perspectives of others—even those who’ve wronged you in ways that most people couldn’t forgive. While it’s one of your most beautiful qualities, it’s also something that worries me.
+You deserve to put yourself first sometimes. You deserve to be selfish—not in a way that takes away from your amazing heart, but in a way that protects it. You’ve spent so much of your life giving to others and making sacrifices; now, as you step into your 20s, I hope you learn to give yourself the same love, care, and understanding you so freely offer the world.
+I’m constantly inspired by the little things you do for me and for everyone around you. Whether it’s you trying to enjoy football because you know I love it, listening to my music and watching my videos, or simply showing up to cheer me on when I need it, your thoughtfulness never goes unnoticed. You have this incredible way of making people feel valued and important. It’s something I admire deeply and something I hope you know is rare and so special.
+Not a single one of your 20 years has been wasted. You’ve touched so many lives, and I know you’ll continue to do so in ways you probably can’t even imagine. One day, when you achieve your dream of becoming a doctor, you’re going to change the lives of countless people. But honestly, you’re already doing that—making a difference, one person at a time, with your kindness, your strength, and your unwavering compassion.
+As you step into this new chapter of your life, I want you to know how proud I am of you. I want you to see yourself the way I see you: as someone who is extraordinary in every sense of the word. You’ve achieved so much already, but I know this is just the beginning. You have the strength, determination, and heart to achieve every dream you’ve ever had, whether big or small.
+So today, on your birthday, take a moment to celebrate not just the amazing person you are but the incredible person you’re becoming. Remember to take care of yourself, to chase your happiness unapologetically, and to recognize how deeply you are loved and cherished by everyone lucky enough to know you.
+Here’s to you, to everything you’ve already done, and to the incredible future that lies ahead. The world is a better place with you in it, and I am endlessly grateful to have you in my life.
+Happy Birthday, Harshitha!
+With all my love and admiration,
+Asmit.
+`;
+
+    // Set font and size
+    doc.setFont("times", "normal");
+    doc.setFontSize(14);
+
+    // Define page settings
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20; // Margin of 20 on both sides
+    const textWidth = pageWidth - margin * 2;
+    const startY = 30; // Starting Y position for the first page
+    let cursorY = startY;
+
+    // Split content into lines
+    const lines = doc.splitTextToSize(content, textWidth);
+
+    // Loop through lines and add them to pages
+    for (let i = 0; i < lines.length; i++) {
+        if (cursorY + 10 > pageHeight - margin) {
+            // If the current Y position exceeds the page height, add a new page
+            doc.addPage();
+            cursorY = margin; // Reset cursor to the top of the new page
+        }
+        doc.text(lines[i], margin, cursorY);
+        cursorY += 10; // Move down by 10 units for the next line
+    }
+
+    // Save the PDF
+    doc.save("Birthday_Letter.pdf");
+}
+
+function playSong() {
+    document.getElementById('birthdaySong').play();
+}
+
+    </script>
+</body>
+</html>
