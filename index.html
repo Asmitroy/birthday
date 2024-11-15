@@ -19,6 +19,7 @@
             background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb);
             background-size: 400% 400%;
             animation: gradient 10s ease infinite;
+            
         }
 
         @keyframes gradient {
@@ -110,6 +111,70 @@ With all my love and admiration, <br>
 Asmit.
 
         </p>
+        <h2>Sign the Birthday Card!</h2>
+    
+    <!-- Canvas for drawing signature -->
+    <canvas id="signatureCanvas" width="400" height="200"></canvas>
+
+    <!-- Button to clear the signature -->
+    <div class="button-container">
+        <button onclick="clearCanvas()">Clear Signature</button>
+    </div>
+
+    <script>
+        // Get the canvas and context
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Set up the drawing parameters
+        ctx.lineWidth = 2; // Thickness of the line
+        ctx.lineCap = 'round'; // Round corners of the line
+        ctx.strokeStyle = 'black'; // Color of the line
+
+        // Function to start drawing
+        function startDrawing(e) {
+            isDrawing = true;
+            lastX = e.offsetX;  // Get the starting X position
+            lastY = e.offsetY;  // Get the starting Y position
+        }
+
+        // Function to draw on the canvas
+        function draw(e) {
+            if (!isDrawing) return; // Don't draw if not in drawing mode
+
+            const currentX = e.offsetX; // Current X position of the mouse
+            const currentY = e.offsetY; // Current Y position of the mouse
+
+            // Draw a line from the last position to the current position
+            ctx.beginPath(); // Start a new path
+            ctx.moveTo(lastX, lastY); // Move to the last position
+            ctx.lineTo(currentX, currentY); // Draw a line to the current position
+            ctx.stroke(); // Commit the line to the canvas
+
+            // Update the last position for the next line segment
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        // Function to stop drawing
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // Function to clear the canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clears the entire canvas
+        }
+
+        // Event listeners to handle mouse events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing); // Ensure drawing stops if the mouse leaves the canvas
+    </script>
         <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
     </div>
 
