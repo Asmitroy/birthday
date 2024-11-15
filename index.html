@@ -68,10 +68,29 @@
         .download-btn:hover {
             background-color: #d81b60;
         }
+        #playButton {
+        background-color: #ffcc00; /* A bright, cheerful yellow */
+        color: #ffffff; /* White text */
+        border: none; /* No border */
+        padding: 10px 20px; /* Padding for size */
+        font-size: 16px; /* Font size */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    #playButton:hover {
+        background-color: #ff9900; /* Darker yellow on hover */
+    }
+
     </style>
 </head>
+
 <body>
+    
     <audio id="birthdaySong" src="music.mp3"></audio>
+    <button id="playButton" onclick="playSong()">Play Birthday Song</button>
     <div class="letter-container" id="letter">
         <h1>Happy Birthday!</h1>
         <p>
