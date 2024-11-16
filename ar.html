@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Letter</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js/aframe/build/aframe-ar.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Special Elite', Arial, sans-serif;
+            background: #f9f7f7;
+            color: #333;
+            overflow: hidden; /* Prevents body scrolling */
+        }
+
+        /* Scrollable text container */
+        #textContainer {
+            position: fixed;
+            bottom: 10%;
+            left: 5%;
+            right: 5%;
+            max-height: 40%; /* Limit height to 40% of the screen */
+            overflow-y: auto; /* Add vertical scrolling if the text is too long */
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            z-index: 10; /* Ensure it's on top */
+        }
+
+        #textContainer h2 {
+            color: #e91e63;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        #textContainer p {
+            color: #444;
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        /* Customize scroll bar */
+        #textContainer::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #textContainer::-webkit-scrollbar-thumb {
+            background: #e91e63;
+            border-radius: 10px;
+        }
+
+        #textContainer::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <!-- AR Scene -->
+    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;'>
+        <!-- Add the face tracking functionality -->
+        <a-entity face="scale: 0.2;"></a-entity> <!-- This is the face tracking element -->
+        
+        <!-- Text will follow the face position -->
+        <a-text value="Happy Birthday Harshitha!" 
+                position="0 0.6 0" 
+                align="center"
+                color="red"
+                scale="2 2 2"
+                look-at="[camera]">
+        </a-text>
+
+        <!-- Box animation (optional) -->
+        <a-box position="0 0.5 0" material="color: pink;"
+               animation="property: rotation; to: 0 360 0; loop: true; dur: 5000;">
+        </a-box>
+    </a-scene>
+
+    <!-- Scrollable Text Section -->
+    <div id="textContainer">
+        <h2>Dear Harshitha</h2>
+        <p>
+            Make these next 1.5 months count. You've got this, and I'm with you every step of the way. 
+            Happy Birthday, and here's to an incredible year ahead filled with joy, growth, and adventure.
+            <br><br>
+            Wishing you all the best,
+            <br>
+            Asmit
+        </p>
+    </div>
+</body>
+</html>
