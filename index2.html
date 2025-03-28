@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Scan the QR Code Below</h1>
+    <canvas id="qrcode"></canvas>
+<script>
+    // URL to encode in the QR Code
+    const websiteURL = "https://asmitroy.github.io/birthday/";
+
+    // Container for the QR Code
+    const qrcodeContainer = document.getElementById("qrcode");
+
+    // Generate the QR Code
+    QRCode.toCanvas(qrcodeContainer, websiteURL, { width: 200 }, function (error) {
+        if (error) {
+            console.error("QR Code Generation Error:", error);
+        } else {
+            console.log("QR Code Generated Successfully!");
+        }
+    });
+</script>
+</body>
+</html>

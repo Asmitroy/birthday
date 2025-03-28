@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Birthday Card</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #signatureCanvas {
+            border: 2px solid #000;
+            cursor: crosshair;
+            margin-top: 20px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        #birthdayLetter {
+            display: none;
+        }
+        #countdown {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF5733;
+        }
+    </style>
+</head>
+<body>
+    <h2>Sign the Birthday Card!</h2>
+    
+    <!-- Countdown Timer -->
+    <p>Time left until the birthday: <span id="countdown"></span></p>
+    
+    <!-- Birthday Letter (Initially hidden) -->
+    <div id="birthdayLetter">
+        <p id="letterText">Happy Birthday!</p>
+        <p>Wishing you a fantastic year ahead filled with joy, love, and laughter.</p>
+
+        <!-- Canvas for drawing signature -->
+        <canvas id="signatureCanvas" width="400" height="200"></canvas>
+
+        <!-- Button to clear the signature -->
+        <div class="button-container">
+            <button onclick="clearCanvas()">Clear Signature</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+        </div>
+    </div>
+
+    <script>
+        // Set the birthday date (you can change this to any date)
+        const birthdayDate = new Date("2024-11-16T00:00:00"); // Set target birthday date here
+
+        // Function to update the countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const timeRemaining = birthdayDate - now;
+
+            if (timeRemaining <= 0) {
+                // Show the letter when the countdown is over
+                document.getElementById("birthdayLetter").style.display = "block";
+                document.getElementById("countdown").innerHTML = "The birthday is here!";
+                clearInterval(countdownInterval); // Stop the countdown once it's over
+            } else {
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }
+
+        // Update the countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Get the canvas and context
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Set up the drawing parameters
+        ctx.lineWidth = 2; // Thickness of the line
+        ctx.lineCap = 'round'; // Round corners of the line
+        ctx.strokeStyle = 'black'; // Color of the line
+
+        // Function to start drawing
+        function startDrawing(e) {
+            isDrawing = true;
+            lastX = e.offsetX;  // Get the starting X position
+            lastY = e.offsetY;  // Get the starting Y position
+        }
+
+        // Function to draw on the canvas
+        function draw(e) {
+            if (!isDrawing) return; // Don't draw if not in drawing mode
+
+            const currentX = e.offsetX; // Current X position of the mouse
+            const currentY = e.offsetY; // Current Y position of the mouse
+
+            // Draw a line from the last position to the current position
+            ctx.beginPath(); // Start a new path
+            ctx.moveTo(lastX, lastY); // Move to the last position
+            ctx.lineTo(currentX, currentY); // Draw a line to the current position
+            ctx.stroke(); // Commit the line to the canvas
+
+            // Update the last position for the next line segment
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        // Function to stop drawing
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // Function to clear the canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clears the entire canvas
+        }
+
+        // Function to download the PDF with the signature
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add the birthday letter content (or customize your text here)
+            doc.setFontSize(18);
+            doc.text("Happy Birthday!", 10, 20);
+            doc.setFontSize(12);
+            doc.text("Wishing you a fantastic year ahead filled with joy, love, and laughter.", 10, 30);
+
+            // Capture the signature from the canvas as an image (data URL)
+            const signatureDataURL = canvas.toDataURL("image/png");
+
+            // Add the signature image to the PDF (position: x=10, y=50, width=200, height=100)
+            doc.addImage(signatureDataURL, "PNG", 10, 50, 180, 90);
+
+            // Save the generated PDF
+            doc.save("birthday-card-with-signature.pdf");
+        }
+
+        // Event listeners to handle mouse events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing); // Ensure drawing stops if the mouse leaves the canvas
+    </script>
+</body>
+</html>
